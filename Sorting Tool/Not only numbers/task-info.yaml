@@ -415,9 +415,6 @@ files:
 - name: src/sorting/Type.java
   visible: true
   learner_created: true
-- name: src/sorting/Solution.java
-  visible: true
-  learner_created: true
 feedback_link: https://hyperskill.org/projects/45/stages/240/implement
 status: Solved
 record: -1

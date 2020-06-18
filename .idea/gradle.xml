@@ -12,6 +12,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Problems/Count the number of merge operations" />
+            <option value="$PROJECT_DIR$/Problems/Merge all sequences" />
             <option value="$PROJECT_DIR$/Sorting Tool/task" />
             <option value="$PROJECT_DIR$/util" />
           </set>

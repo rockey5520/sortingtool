@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -8,14 +12,23 @@ public class Main {
     Scanner scanner = new Scanner(System.in);
 
     int length = scanner.nextInt();
-    int[] ints = new int[length];
+    String[] lines = new String[length];
     for (int i = 0; i < length; i++) {
-      ints[i] = scanner.nextInt();
+      lines[i] = scanner.nextLine();
     }
-    mergeSort(ints, 0, ints.length);
-    System.out.println(counter);
+    List<Integer> integers = new ArrayList<>();
 
+    for (String s : lines
+    ) {
+      String[] s1 = s.split(" ");
+      for (String s2 : s1
+      ) {
+        integers.add(Integer.valueOf(s2));
+      }
+    }
 
+    Collections.sort(integers, Collections.reverseOrder());
+    System.out.println(Arrays.toString(new List[]{integers}));
   }
 
   public static void mergeSort(int[] array, int leftIncl, int rightExcl) {
