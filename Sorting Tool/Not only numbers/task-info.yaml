@@ -385,6 +385,39 @@ files:
         return CheckResult(true)
     }
   learner_created: false
+- name: src/sorting/Main.java
+  visible: true
+  text: |
+    package sorting;
+
+    import java.util.*;
+
+    public class Main {
+        public static void main(final String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            var list = new ArrayList();
+            int counter = 0;
+            while (scanner.hasNextLong()) {
+                long number = scanner.nextLong();
+                list.add(number);
+                counter++;
+            }
+            list.sort(Collections.reverseOrder());
+            int frequency = Collections.frequency(list, list.get(0));
+            System.out.println("Total numbers: "+counter);
+            System.out.println("The greatest number: "+list.get(0)+" ("+frequency+" time(s)).");
+        }
+    }
+  learner_created: true
+- name: src/sorting/Sorting.java
+  visible: true
+  learner_created: true
+- name: src/sorting/Type.java
+  visible: true
+  learner_created: true
+- name: src/sorting/Solution.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/45/stages/240/implement
-status: Unchecked
+status: Solved
 record: -1
