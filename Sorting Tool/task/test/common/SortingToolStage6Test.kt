@@ -4,15 +4,34 @@ import org.hyperskill.hstest.stage.StageTest
 import org.hyperskill.hstest.testcase.CheckResult
 import org.hyperskill.hstest.testcase.TestCase
 import sorting.Main
+import java.io.File
+import java.io.FileNotFoundException
 import java.util.*
 
-abstract class SortingToolStage5Test : StageTest<SortingToolClue>(Main::class.java) {
+abstract class SortingToolStage6Test : StageTest<SortingToolClue>(Main::class.java) {
 
     override fun generate(): List<TestCase<SortingToolClue>> {
-        return stage4Tests() + stage5Tests()
+        return stage4Tests() + stage5Tests() + stage6Tests()
     }
 
     override fun check(reply: String, clue: SortingToolClue): CheckResult {
+        @Suppress("NAME_SHADOWING") var reply = reply
+
+        val fileNameArgIdx = clue.args.indexOf("-outputFile")
+
+        if (fileNameArgIdx != -1) {
+            val fileName = clue.args[fileNameArgIdx + 1]
+
+            try {
+                reply = File(fileName).readText()
+            } catch (ex: FileNotFoundException) {
+                return CheckResult.wrong(
+                        "There is no output file $fileName"
+                )
+            }
+
+        }
+
         return when {
             badArgs(clue.args) -> CheckResult(true)  // TODO: test something here
             "byCount" in clue.args -> checkByCount(reply, clue)
@@ -56,49 +75,17 @@ abstract class SortingToolStage5Test : StageTest<SortingToolClue>(Main::class.ja
     }
 }
 
-fun stage5Tests(): List<TestCase<SortingToolClue>> {
-    return listOf(
-            createTest(
-                    """
-                |1 -2   333 4
-                |42
-                |1                 1
-                """.trimMargin(),
-                    true,
-                    "-sortingType"
-            ),
-            createTest(
-                    """
-                |1 -2   333 4
-                |42
-                |1                 1
-                """.trimMargin(),
-                    true,
-                    "-sortingType", "byCount", "-dataType", "long", "-abc"
-            ),
-            createTest(
-                    """
-                |1111 1111
-                |22222
-                |3
-                |44
-                """.trimMargin(),
-                    false,
-                    "-sortingType", "byCount", "-dataType", "line", "-cde"
-            ),
-            createTest(
-                    """
-                |1111 1111
-                |22222
-                |3
-                |44
-                """.trimMargin(),
-                    false,
-                    "-dataType", "line", "-sortingType"
-            )
-    )
+private fun fileTestCase(
+        input: String,
+        revealTest: Boolean,
+        file: String,
+        vararg args: String = arrayOf("-dataType", "long")
+): TestCase<SortingToolClue> {
+    return TestCase<SortingToolClue>()
+            .setAttach(SortingToolClue(input, revealTest, args.toList()))
+            .addArguments(*args)
+            .addFile(file, input)
 }
-
 
 fun stage4Tests(): List<TestCase<SortingToolClue>> {
     return listOf(
@@ -181,6 +168,94 @@ fun stage4Tests(): List<TestCase<SortingToolClue>> {
     )
 }
 
+fun stage5Tests(): List<TestCase<SortingToolClue>> {
+    return listOf(
+            createTest(
+                    """
+                |1 -2   333 4
+                |42
+                |1                 1
+                """.trimMargin(),
+                    true,
+                    "-sortingType"
+            ),
+            createTest(
+                    """
+                |1 -2   333 4
+                |42
+                |1                 1
+                """.trimMargin(),
+                    true,
+                    "-sortingType", "byCount", "-dataType", "long", "-abc"
+            ),
+            createTest(
+                    """
+                |1111 1111
+                |22222
+                |3
+                |44
+                """.trimMargin(),
+                    false,
+                    "-sortingType", "byCount", "-dataType", "line", "-cde"
+            ),
+            createTest(
+                    """
+                |1111 1111
+                |22222
+                |3
+                |44
+                """.trimMargin(),
+                    false,
+                    "-dataType", "line", "-sortingType"
+            )
+    )
+}
+
+fun stage6Tests(): List<TestCase<SortingToolClue>> {
+    return listOf(
+            fileTestCase(
+                    """
+                |1 -2   333 4
+                |42
+                |1                 1
+                """.trimMargin(),
+                    true,
+                    "input.txt",
+                    "-sortingType", "byCount", "-inputFile", "input.txt"
+            ),
+            fileTestCase(
+                    """
+                |1 -2   333 4
+                |42
+                |1                 1
+                """.trimMargin(),
+                    true,
+                    "data.dat",
+                    "-sortingType", "byCount", "-inputFile", "data.dat", "-outputFile", "out.txt"
+            ),
+            fileTestCase(
+                    """
+                |1 -2   333 4
+                |42
+                |1                 1
+                """.trimMargin(),
+                    false,
+                    "input.txt",
+                    "-sortingType", "natural", "-inputFile", "input.txt"
+            ),
+            fileTestCase(
+                    """
+                |1 -2   333 4
+                |42
+                |1                 1
+                """.trimMargin(),
+                    false,
+                    "data.dat",
+                    "-sortingType", "natural", "-inputFile", "data.dat", "-outputFile", "out.txt"
+            )
+    )
+}
+
 
 fun revealRawTest(clue: SortingToolClue, reply: String): String {
     return with(clue) { "Args:\n${args.joinToString(" ")}\nInput:\n$consoleInput\nYour output:\n$reply\n\n" }
@@ -223,9 +298,11 @@ fun parseWordTokens(input: String): List<String> {
     return wordTokens
 }
 
+
 fun parseLineTokens(input: String): List<String> {
     return input.lines()
 }
+
 
 fun <TokenType : Comparable<TokenType>> checkNatural(
         actualTokens: List<TokenType>,
@@ -311,6 +388,7 @@ fun <TokenType : Comparable<TokenType>> checkNatural(
     return CheckResult(true)
 }
 
+
 fun <TokenType : Comparable<TokenType>> checkByCount(
         actualTokens: List<TokenType>,
         tokenParser: (String) -> TokenType,
@@ -394,4 +472,5 @@ fun <TokenType : Comparable<TokenType>> checkByCount(
 
     return CheckResult(true)
 }
+
 

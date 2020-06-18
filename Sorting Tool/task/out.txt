@@ -1,0 +1,2 @@
+Total words: 1.
+Sorted data: data.dat

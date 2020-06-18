@@ -1,83 +1,121 @@
 package sorting;
 
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.TreeMap;
 
 public class Sorting {
 
-  private DataSortingType dataSortingType;
-  private List<String> stringList;
+  private final List<String> stringList;
+  private final Map<String, Integer> maxCount;
+  private SortingOrder sortingOrder;
+  private InputType inputType;
+
   private Type type;
-  private Map<String, Integer> maxcount;
+  private String inputName;
+  private OutputType outputType;
+  private String outputName;
 
   public Sorting() {
     this.type = Type.WORD;
-    this.dataSortingType = DataSortingType.NATURAL;
+    this.sortingOrder = SortingOrder.NATURAL;
+    this.inputType = InputType.SCANNER;
+    this.outputType = OutputType.SCANNER;
     this.stringList = new ArrayList<>();
-    this.maxcount = new TreeMap<>();
+    this.maxCount = new TreeMap<>();
   }
 
   public void setType(String type) {
-//        if (type == null) {
-//            this.type = DataType.WORD;
-//        } else {
     try {
       this.type = Type.valueOf(type.toUpperCase());
     } catch (Exception e) {
       e.printStackTrace();
     }
-//        }
   }
 
-  public Type getType() {
-    return type;
-  }
-
-  public void setType(Type type) {
-    this.type = type;
-  }
-
-  public DataSortingType getDataSortingType() {
-    return dataSortingType;
-  }
-
-  public void setDataSortingType(DataSortingType dataSortingType) {
-    this.dataSortingType = dataSortingType;
-  }
-
-  public void setSorting(String sorting) {
-//        if (sorting == null) {
-//            this.sorting = DataSorting.NATURAL;
-//        } else {
+  public void setSortingOrder(String sosortingOrder) {
     try {
-      this.dataSortingType = DataSortingType.valueOf(sorting.toUpperCase());
+      this.sortingOrder = SortingOrder.valueOf(sosortingOrder.toUpperCase());
     } catch (Exception e) {
       e.printStackTrace();
     }
-//        }
   }
 
-  public void inclusive(StringBuilder stringBuilder) {
+  public void setInputType(InputType inputType) {
+    this.inputType = inputType;
+  }
+
+  public void setOutputType(OutputType outputType) {
+    this.outputType = outputType;
+  }
+
+  public void setInputName(String inputName) {
+    this.inputName = inputName;
+  }
+
+  public void setOutputName(String outputName) {
+    this.outputName = outputName;
+  }
+
+  public void execute() {
+    Scanner scannerInput = null;
+    switch (inputType) {
+      case SCANNER:
+        scannerInput = new Scanner(System.in);
+        break;
+      case INPUTFILE:
+        scannerInput = new Scanner(inputName);
+        break;
+    }
+    try {
+      StringBuilder stringBuilder = new StringBuilder();
+      while (scannerInput.hasNextLine()) {
+        stringBuilder.append(scannerInput.nextLine()).append("\n");
+      }
+      include(stringBuilder);
+      scannerInput.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    switch (outputType) {
+      case SCANNER:
+        System.setOut(System.out);
+        break;
+      case OUTPUTFILE:
+        try {
+          System.setOut(new PrintStream(new FileOutputStream(outputName)));
+        } catch (FileNotFoundException e) {
+          e.printStackTrace();
+        }
+        break;
+    }
+  }
+
+  private void include(StringBuilder stringBuilder) {
     switch (type) {
       case LINE:
         for (String item : stringBuilder.toString().split("\n")) {
-          inclusive(item);
+          include(item);
         }
         break;
       case WORD:
         for (String item : stringBuilder.toString().split("\\s+")) {
-          inclusive(item);
+          include(item);
         }
         break;
       case LONG:
         for (String item : stringBuilder.toString().split("\\s+")) {
           if (item.matches("-?\\d+")) {
-            inclusive(item);
+            include(item);
           } else {
             System.out.println("\"" + item + "\" isn't a long. It's skipped.");
           }
@@ -86,12 +124,12 @@ public class Sorting {
     }
   }
 
-  public void inclusive(String value) {
+  private void include(String value) {
     stringList.add(value);
-    if (maxcount.containsKey(value)) {
-      maxcount.replace(value, maxcount.get(value) + 1);
+    if (maxCount.containsKey(value)) {
+      maxCount.replace(value, maxCount.get(value) + 1);
     } else {
-      maxcount.put(value, 1);
+      maxCount.put(value, 1);
     }
   }
 
@@ -120,7 +158,7 @@ public class Sorting {
         string = "Total numbers: %d.\n";
         break;
     }
-    switch (dataSortingType) {
+    switch (sortingOrder) {
       case NATURAL:
         System.out.format(string + "Sorted data:", size);
         for (String item : stringList) {
@@ -130,7 +168,7 @@ public class Sorting {
       case BYCOUNT:
         Map<String, Integer> mapSort = new LinkedHashMap<>();
         for (String item : stringList) {
-          mapSort.put(item, maxcount.get(item));
+          mapSort.put(item, maxCount.get(item));
         }
 
         LinkedHashMap<String, Integer> reverseSortedMap = new LinkedHashMap<>();
@@ -147,19 +185,23 @@ public class Sorting {
   }
 
   public enum Type {
-    LINE("LINE"),
-    WORD("WORD"),
-    LONG("LONG");
-
-    private String type;
-
-    Type(String type) {
-      this.type = type;
-    }
+    LINE,
+    WORD,
+    LONG
   }
 
-  public enum DataSortingType {
+  public enum SortingOrder {
     NATURAL,
     BYCOUNT
+  }
+
+  public enum InputType {
+    SCANNER,
+    INPUTFILE
+  }
+
+  public enum OutputType {
+    SCANNER,
+    OUTPUTFILE
   }
 }

@@ -411,27 +411,6 @@ files:
     }
 
   learner_created: false
-- name: src/sorting/Type.java
-  visible: true
-  text: |
-    package sorting;
-
-    public enum Type {
-      LINE("line"),
-      WORD("word"),
-      LONG("long");
-
-      private final String type;
-
-      Type(String type) {
-        this.type = type;
-      }
-
-      public String getType() {
-        return type;
-      }
-    }
-  learner_created: true
 - name: src/sorting/Main.java
   visible: true
   text: "package sorting;\n\nimport java.util.HashMap;\nimport java.util.Map;\nimport\
@@ -635,4 +614,4 @@ files:
   learner_created: true
 feedback_link: https://hyperskill.org/projects/45/stages/243/implement
 status: Solved
-record: -1
+record: 5
