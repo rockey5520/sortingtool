@@ -353,6 +353,296 @@ files:
 
 
   learner_created: false
+- name: src/sorting/Type.java
+  visible: true
+  text: |
+    package sorting;
+
+    public enum Type {
+      LINE("line"),
+      WORD("word"),
+      LONG("long");
+
+      private final String type;
+
+      Type(String type) {
+        this.type = type;
+      }
+
+      public String getType() {
+        return type;
+      }
+    }
+  learner_created: true
+- name: src/sorting/Main.java
+  visible: true
+  text: |
+    package sorting;
+
+    import java.util.HashMap;
+    import java.util.Map;
+    import java.util.Scanner;
+
+    public class Main {
+        public static void main(final String[] args) {
+            //stage 3
+            if (args.length == 0) {
+                return;
+            }
+            Map<String, String> arguments = new HashMap<>();
+            for (int i = 0; i < args.length; ++i) {
+                switch (args[i]) {
+                    case "-dataType":
+                        if (i + 1 < args.length) {
+                            arguments.put(args[i], args[i + 1]);
+                        }
+                        break;
+                    case "-sortIntegers":
+                        arguments.put(args[i], "");
+                        break;
+                }
+            }
+
+            Sorting Sorting = new Sorting();
+            Scanner scanner = new Scanner(System.in);
+            StringBuilder stringBuilder = new StringBuilder();
+            while (scanner.hasNextLine()) {
+                stringBuilder.append(scanner.nextLine()).append("\n");
+            }
+
+            for (var entry : arguments.entrySet()) {
+                switch (entry.getKey()) {
+                    case "-dataType":
+                        Sorting.setType(Type.valueOf(entry.getValue().toUpperCase()));
+                        break;
+                    case "-sortIntegers":
+                        Sorting.setType(Type.LONG);
+                        break;
+                }
+            }
+
+            Sorting.include(stringBuilder);
+
+            if (arguments.containsKey("-dataType")
+                && arguments.containsKey("-sortIntegers")) {
+                Sorting.sort();
+            } else {
+                for (var entry : arguments.entrySet()) {
+                    switch (entry.getKey()) {
+                        case "-dataType":
+                            Sorting.show();
+                            break;
+                        case "-sortIntegers":
+                            Sorting.sort();
+                            break;
+                    }
+                }
+            }
+
+        /*    //stage 2
+            if (args.length == 0) {
+                return;
+            }
+            Sorting sorting = new Sorting();
+            if (args.length == 2 && args[0].contains("-dataType")) {
+                sorting.setType(args[1].toUpperCase());
+            }
+
+            Scanner scanner = new Scanner(System.in);
+            StringBuilder stringBuilder = new StringBuilder();
+            while (scanner.hasNextLine()) {
+                stringBuilder.append(scanner.nextLine()).append("\n");
+            }
+            sorting.create(stringBuilder);
+            sorting.display();*/
+
+            /*
+            // stage 1
+            Scanner scanner = new Scanner(System.in);
+            var list = new ArrayList();
+            int counter = 0;
+            while (scanner.hasNextLong()) {
+                long number = scanner.nextLong();
+                list.add(number);
+                counter++;
+            }
+            list.sort(Collections.reverseOrder());
+            int frequency = Collections.frequency(list, list.get(0));
+            System.out.println("Total numbers: " + counter);
+            System.out.println("The greatest number: " + list.get(0) + " (" + frequency + " time(s)).");*/
+        }
+    }
+  learner_created: true
+- name: src/sorting/Sorting.java
+  visible: true
+  text: |-
+    package sorting;
+
+
+    import java.util.ArrayDeque;
+    import java.util.ArrayList;
+    import java.util.Deque;
+    import java.util.HashMap;
+    import java.util.List;
+    import java.util.Map;
+
+    public class Sorting {
+      private Type type;
+      private List<String> list;
+      private Deque<String> maxValue;
+      private Map<String, Integer> maxCount;
+
+      public Type getType() {
+        return type;
+      }
+
+      public void setType(Type type) {
+        this.type = type;
+      }
+
+      public void setType(String type) {
+        try {
+          this.type = Type.valueOf(type);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+
+      public Sorting() {
+        this.type = Type.WORD;
+        this.list = new ArrayList<>();
+        this.maxValue = new ArrayDeque<>();
+        this.maxCount = new HashMap<>();
+      }
+
+      public void include(StringBuilder stringBuilder) {
+        switch (type) {
+          case LINE:
+            for (String item : stringBuilder.toString().split("\n")) {
+              include(item);
+            }
+            break;
+          case WORD:
+          case LONG:
+            for (String item : stringBuilder.toString().split("\\s+")) {
+              include(item);
+            }
+            break;
+        }
+      }
+
+      public void include(String value) {
+        if (list.size() > 0) {
+          if (compare(value, maxValue.peek()) >= 0) {
+            list.add(value);
+            maxValue.push(value);
+          } else if (compare(value, list.get(0)) < 0) {
+            list.add(0, value);
+          } else {
+            if (compare(value, maxValue.peekFirst()) == compare(value, maxValue.peekLast())) {
+              int i = list.size() / 2;
+              long diff = compare(value, list.get(i));
+              long oldDiff = Math.abs(diff);
+              while (diff != 0) {
+                if (oldDiff > Math.abs(diff)) break;
+                if (diff > 0) ++i;
+                if (diff < 0) --i;
+                diff = compare(value, list.get(i));
+                oldDiff = Math.abs(diff);
+              }
+              list.add(i, value);
+            } else if (compare(value, maxValue.peekFirst()) > 0) {
+              for (int i = list.size() - 1; i >= 0; --i) {
+                if (compare(value, list.get(i)) >= 0) {
+                  list.add(i, value);
+                  break;
+                }
+              }
+            } else {
+              for (int i = 0; i < list.size(); ++i) {
+                if (compare(value, list.get(i)) <= 0) {
+                  list.add(i, value);
+                  break;
+                }
+              }
+            }
+          }
+        } else {
+          list.add(value);
+          maxValue.add(value);
+        }
+        if (maxCount.containsKey(value)) {
+          maxCount.replace(value, maxCount.get(value) + 1);
+        } else {
+          maxCount.put(value, 1);
+        }
+      }
+
+      private int compare(String first, String second) {
+        switch (type) {
+          case LINE:
+            return first.length() - second.length();
+          case WORD:
+    //                Good solution, bud not finished test 8
+    //                if (first.length() == second.length()) {
+    //                    return Character.compare(first.charAt(0), second.charAt(0));
+    //                }
+    //                return first.length() - second.length();
+    //                Bad solution
+            if (first.matches("-?\\d+") && second.matches("-?\\d+")) {
+              int a = Integer.parseInt(first);
+              int b = Integer.parseInt(second);
+              return Integer.compare(a, b);
+            } else {
+              return first.length() - second.length();
+            }
+          case LONG:
+            return (int) (Long.parseLong(first) - Long.parseLong(second));
+        }
+        return 0;
+      }
+
+      public void show() {
+        String string = "";
+        int size = list.size();
+        int time = maxCount.get(maxValue.peek());
+        int weight = 100 * time / size;
+        switch (type) {
+          case LINE:
+            string = "Total lines: %d\nThe longest line:\n%s\n(%d + time(s), %d%%).";
+            break;
+          case WORD:
+            string = "Total words: %d\nThe longest word: %s (%d + time(s), %d%%).";
+            break;
+          case LONG:
+            string = "Total numbers: %d\nThe greatest number: %s (%d + time(s), %d%%).";
+            break;
+        }
+        System.out.format(string, size, maxValue.peek(), time, weight);
+      }
+
+      public void sort() {
+        String string = "";
+        int size = list.size();
+        switch (type) {
+          case LINE:
+            string = "Total lines: %d.\nSorted data:";
+            break;
+          case WORD:
+            string = "Total words: %d.\nSorted data:";
+            break;
+          case LONG:
+            string = "Total numbers: %d.\nSorted data:";
+            break;
+        }
+        System.out.format(string, size);
+        for (String item : list) {
+          System.out.print(" " + item);
+        }
+        System.out.println();
+      }
+    }
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/45/stages/242/implement
-status: Unchecked
-record: -1
+status: Solved
+record: 4

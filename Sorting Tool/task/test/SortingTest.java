@@ -1,5 +1,5 @@
-import common.SortingToolStage2Test;
+import common.SortingToolStage5Test;
 
-public class SortingTest extends SortingToolStage2Test {
+public class SortingTest extends SortingToolStage5Test {
 
 }

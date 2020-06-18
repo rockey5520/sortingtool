@@ -411,6 +411,228 @@ files:
     }
 
   learner_created: false
+- name: src/sorting/Type.java
+  visible: true
+  text: |
+    package sorting;
+
+    public enum Type {
+      LINE("line"),
+      WORD("word"),
+      LONG("long");
+
+      private final String type;
+
+      Type(String type) {
+        this.type = type;
+      }
+
+      public String getType() {
+        return type;
+      }
+    }
+  learner_created: true
+- name: src/sorting/Main.java
+  visible: true
+  text: "package sorting;\n\nimport java.util.HashMap;\nimport java.util.Map;\nimport\
+    \ java.util.Scanner;\n\npublic class Main {\n\n  public static void main(final\
+    \ String[] args) {\n   //stage 5\n    \n    /* //stage 4\n    if (args.length\
+    \ == 0) {\n      return;\n    }\n\n    Map<String, String> arguments = new HashMap<>();\n\
+    \    for (int i = 0; i < args.length; ++i) {\n      if (i + 1 < args.length) {\n\
+    \        arguments.put(args[i], args[i + 1]);\n        ++i;\n      } else {\n\
+    \        arguments.put(args[i], null);\n      }\n    }\n\n    Sorting genericsSorting\
+    \ = new Sorting();\n    Scanner scanner = new Scanner(System.in);\n    StringBuilder\
+    \ stringBuilder = new StringBuilder();\n    while (scanner.hasNextLine()) {\n\
+    \      stringBuilder.append(scanner.nextLine()).append(\"\\n\");\n    }\n\n  \
+    \  genericsSorting.setSorting(Nature.NATURAL);\n    genericsSorting.setType(Type.WORD);\n\
+    \n    for (var entry : arguments.entrySet()) {\n      switch (entry.getKey())\
+    \ {\n        case \"-dataType\":\n          genericsSorting.setType(entry.getValue());\n\
+    \          break;\n        case \"-sortingType\":\n          genericsSorting.setSorting(entry.getValue());\n\
+    \          break;\n      }\n    }\n    genericsSorting.inlcusive(stringBuilder);\n\
+    \    genericsSorting.sort();\n  }*/\n      /*  //stage 3\n        if (args.length\
+    \ == 0) {\n            return;\n        }\n        Map<String, String> arguments\
+    \ = new HashMap<>();\n        for (int i = 0; i < args.length; ++i) {\n      \
+    \      switch (args[i]) {\n                case \"-dataType\":\n             \
+    \       if (i + 1 < args.length) {\n                        arguments.put(args[i],\
+    \ args[i + 1]);\n                    }\n                    break;\n         \
+    \       case \"-sortIntegers\":\n                    arguments.put(args[i], \"\
+    \");\n                    break;\n            }\n        }\n\n        Sorting\
+    \ Sorting = new Sorting();\n        Scanner scanner = new Scanner(System.in);\n\
+    \        StringBuilder stringBuilder = new StringBuilder();\n        while (scanner.hasNextLine())\
+    \ {\n            stringBuilder.append(scanner.nextLine()).append(\"\\n\");\n \
+    \       }\n\n        for (var entry : arguments.entrySet()) {\n            switch\
+    \ (entry.getKey()) {\n                case \"-dataType\":\n                  \
+    \  Sorting.setType(Type.valueOf(entry.getValue().toUpperCase()));\n          \
+    \          break;\n                case \"-sortIntegers\":\n                 \
+    \   Sorting.setType(Type.LONG);\n                    break;\n            }\n \
+    \       }\n\n        Sorting.include(stringBuilder);\n\n        if (arguments.containsKey(\"\
+    -dataType\")\n            && arguments.containsKey(\"-sortIntegers\")) {\n   \
+    \         Sorting.sort();\n        } else {\n            for (var entry : arguments.entrySet())\
+    \ {\n                switch (entry.getKey()) {\n                    case \"-dataType\"\
+    :\n                        Sorting.show();\n                        break;\n \
+    \                   case \"-sortIntegers\":\n                        Sorting.sort();\n\
+    \                        break;\n                }\n            }\n        }*/\n\
+    \n    /*    //stage 2\n        if (args.length == 0) {\n            return;\n\
+    \        }\n        Sorting sorting = new Sorting();\n        if (args.length\
+    \ == 2 && args[0].contains(\"-dataType\")) {\n            sorting.setType(args[1].toUpperCase());\n\
+    \        }\n\n        Scanner scanner = new Scanner(System.in);\n        StringBuilder\
+    \ stringBuilder = new StringBuilder();\n        while (scanner.hasNextLine())\
+    \ {\n            stringBuilder.append(scanner.nextLine()).append(\"\\n\");\n \
+    \       }\n        sorting.create(stringBuilder);\n        sorting.display();*/\n\
+    \n        /*\n        // stage 1\n        Scanner scanner = new Scanner(System.in);\n\
+    \        var list = new ArrayList();\n        int counter = 0;\n        while\
+    \ (scanner.hasNextLong()) {\n            long number = scanner.nextLong();\n \
+    \           list.add(number);\n            counter++;\n        }\n        list.sort(Collections.reverseOrder());\n\
+    \        int frequency = Collections.frequency(list, list.get(0));\n        System.out.println(\"\
+    Total numbers: \" + counter);\n        System.out.println(\"The greatest number:\
+    \ \" + list.get(0) + \" (\" + frequency + \" time(s)).\");*/\n}"
+  learner_created: true
+- name: src/sorting/Sorting.java
+  visible: true
+  text: |-
+    package sorting;
+
+
+    import java.util.ArrayList;
+    import java.util.Collections;
+    import java.util.LinkedHashMap;
+    import java.util.List;
+    import java.util.Map;
+    import java.util.TreeMap;
+
+    enum Nature {
+      NATURAL,
+      BYCOUNT
+    }
+    public class Sorting {
+      private Type type;
+      private Nature sorting;
+      private List<String> list;
+      private Map<String, Integer> maxCount;
+
+      public Type getType() {
+        return type;
+      }
+
+      public void setType(Type type) {
+        this.type = type;
+      }
+
+      public void setType(String type) {
+        if (type == null) {
+          this.type = Type.WORD;
+        } else {
+          try {
+            this.type = Type.valueOf(type.toUpperCase());
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        }
+      }
+
+      public Nature getSorting() {
+        return sorting;
+      }
+
+      public void setSorting(Nature sorting) {
+        this.sorting = sorting;
+      }
+
+      public void setSorting(String sorting) {
+        if (sorting == null) {
+          this.sorting = Nature.NATURAL;
+        } else {
+          try {
+            this.sorting = Nature.valueOf(sorting.toUpperCase());
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        }
+      }
+
+      public Sorting() {
+        this.type = Type.WORD;
+        this.list = new ArrayList<>();
+        this.maxCount = new TreeMap<>();
+      }
+
+      public void inlcusive(StringBuilder stringBuilder) {
+        switch (type) {
+          case LINE:
+            for (String item : stringBuilder.toString().split("\n")) {
+              inlcusive(item);
+            }
+            break;
+          case WORD:
+          case LONG:
+            for (String item : stringBuilder.toString().split("\\s+")) {
+              inlcusive(item);
+            }
+            break;
+        }
+      }
+
+      public void inlcusive(String value) {
+        list.add(value);
+        if (maxCount.containsKey(value)) {
+          maxCount.replace(value, maxCount.get(value) + 1);
+        } else {
+          maxCount.put(value, 1);
+        }
+      }
+
+      public void sort() {
+        String string = "";
+        int size = list.size();
+        switch (type) {
+          case LINE:
+            Collections.sort(list);
+            string = "Total lines: %d.\n";
+            break;
+          case WORD:
+            Collections.sort(list);
+            string = "Total words: %d.\n";
+            break;
+          case LONG:
+            List<Long> array = new ArrayList<>();
+            for (String item : list) {
+              array.add(Long.parseLong(item));
+            }
+            Collections.sort(array);
+            list.clear();
+            for (Long item : array) {
+              list.add(String.valueOf(item));
+            }
+            string = "Total numbers: %d.\n";
+            break;
+        }
+        switch (sorting) {
+          case NATURAL:
+            System.out.format(string + "Sorted data:", size);
+            for (String item : list) {
+              System.out.print(" " + item);
+            }
+            break;
+          case BYCOUNT:
+            Map<String, Integer> mapSort = new LinkedHashMap<>();
+            for (String item : list) {
+              mapSort.put(item, maxCount.get(item));
+            }
+
+            LinkedHashMap<String, Integer> reverseSortedMap = new LinkedHashMap<>();
+            mapSort.entrySet().stream().sorted(Map.Entry.comparingByValue())
+                .forEachOrdered(x -> reverseSortedMap.put(x.getKey(), x.getValue()));
+
+            System.out.format(string, size);
+            for (var item : reverseSortedMap.entrySet()) {
+              int weight = 100 * item.getValue() / size;
+              System.out.println(item.getKey() + ": " + item.getValue() + " time(s), " + weight + "%");
+            }
+            break;
+        }
+      }
+    }
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/45/stages/243/implement
-status: Unchecked
+status: Solved
 record: -1
