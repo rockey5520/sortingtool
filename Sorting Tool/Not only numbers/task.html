@@ -1,0 +1,54 @@
+<h2 style="text-align: center;">Description</h2>
+
+<p>In this stage, you should implement command-line arguments parsing. Parse the <code class="java">-dataType</code> argument and it's following type. The type can be only <code class="java">long</code>, <code class="java">line</code> or <code class="java">word</code>. If the argument is not provided, you should assume that <code class="java">-dataType</code> argument is <code class="java">word</code>.</p>
+
+<p>After that, you must treat all the user inputs as numbers, words or lines depending on command-line argument that was passed to the program.</p>
+
+<p>If the argument is <code class="java">word</code>, the program should separate all the user input into words separated by spaces. You should compare words by length and in case two words have the same length - lexicographically.</p>
+
+<p>If the argument is <code class="java">line</code>, the program should separate all the user input into lines. You should compare two lines by length and in case two lines have the same length - lexicographically, like the words compared. Notice that you should print the longest line on a separate line so you end up with 4 lines being printed, not 2. You can see this in the examples.</p>
+
+<p>You should also add the percentage of occurrence of the found word among all words (words, integers or lines).</p>
+
+<p>By the way, in the case of lines, you should print the longest line on a separate line, but words and numbers should be printed on the same line as percentages. You can see this behavior in the examples.</p>
+
+<h2 style="text-align: center;">Examples</h2>
+
+<p><strong>Run configuration examples:</strong></p>
+
+<pre><code class="language-no-highlight">java SortingTool -dataType long
+</code></pre>
+
+<pre><code class="language-no-highlight">java SortingTool -dataType line
+</code></pre>
+
+<pre><code class="language-no-highlight">java SortingTool -dataType word
+</code></pre>
+
+<p><strong>Run example:</strong></p>
+
+<p>Input:</p>
+
+<pre><code class="language-no-highlight">1 -2   333 4
+42
+1                 1
+</code></pre>
+
+<p>Output example for words:</p>
+
+<pre><code class="language-no-highlight">Total words: 7.
+The longest word: 333 (1 time(s), 14%).
+</code></pre>
+
+<p>Output example for lines:</p>
+
+<pre><code class="language-no-highlight">Total lines: 3.
+The longest line:
+1                 1
+(1 time(s), 33%).</code></pre>
+
+<p>Output example for integers:</p>
+
+<pre><code class="language-no-highlight">Total numbers: 7.
+The greatest number: 333 (1 time(s), 14%).
+</code></pre>

@@ -1,0 +1,36 @@
+<h2 style="text-align: center;">Description</h2>
+
+<p>This project is about sorting different data. Numbers, words, lines.</p>
+
+<p>In the first stage, let's stick to integers only. The program should read integers from the console. Note, that every line of input can contain multiple numbers - and these numbers can be separated not only by a single space but let's say 20 spaces. </p>
+
+<p>Your program should process every line the user inputs. To end the input, the user should type <a target="_blank" href="https://en.wikipedia.org/wiki/End-of-file" rel="noopener noreferrer nofollow">End-of-file</a> symbol that tells your operating system that no more input will be provided. It's <code class="java">Ctrl+D</code> on Linux and Mac and <code class="java">Ctrl+Z</code> on Windows.</p>
+
+<p>Notice that if you run your program and try to manually type numbers you realize that this process will go on infinitely. And by pressing End-of-file symbol you say to the program that you won't type any more symbols to the standard input. And in this case, <code class="java">scanner.hasNext...</code> will return <code class="java">false</code>. So, you don't need to check specifically for End-of-file symbol to be typed.</p>
+
+<p>After the end of the input, your program should output three things:</p>
+
+<ol>
+	<li>The number of numbers in the input  (X)</li>
+	<li>The greatest number in the input (Y)</li>
+	<li>How many times this greatest number occurs in the input (Z)</li>
+</ol>
+
+<p>You should paste these numbers in the following template:</p>
+
+<pre><code class="language-no-highlight">Total numbers: X.
+The greatest number: Y (Z time(s)).</code></pre>
+
+<h2 style="text-align: center;">Example</h2>
+
+<p>Input:</p>
+
+<pre><code class="language-no-highlight">1 -2   33 4
+42
+1                 1</code></pre>
+
+<p>Output:</p>
+
+<pre><code class="language-no-highlight">Total numbers: 7.
+The greatest number: 42 (1 time(s)).
+</code></pre>

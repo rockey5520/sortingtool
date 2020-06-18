@@ -1,0 +1,57 @@
+<h2 style="text-align: center;">Description</h2>
+
+<p>What if someone runs your program like this: <code class="java">java SortingTool -sortingType</code>? The value of the <code class="java">-sortingType</code> argument is missing!</p>
+
+<p>And what if <code class="java">-dataType</code> argument is <code class="java">long</code> but there are words in the input text?</p>
+
+<p>What if there are unknown arguments?</p>
+
+<p>Let's handle these errors. </p>
+
+<p>In summary, for this stage, implement error messages when the input is wrong.</p>
+
+<h2 style="text-align: center;">Examples</h2>
+
+<p>Notice that <code class="java">'&gt;'</code> symbol represents the start of the input (not including symbol itself):</p>
+
+<p><strong>Example 1:</strong></p>
+
+<pre><code class="language-no-highlight">$&gt; java SortingTool -sortingType natural -dataType long
+&gt; 1 -2   33 4
+&gt; 42
+&gt; 1                 1
+Total numbers: 7
+Sorted data: -2 1 1 1 4 42 333 </code></pre>
+
+<p><strong>Example 2:</strong></p>
+
+<pre><code class="language-no-highlight">$&gt; java SortingTool -sortingType byCount -dataType long
+&gt; 1 -2   33 4
+&gt; 42
+&gt; 1                 1
+Total numbers: 7.
+-2: 1 time(s), 14%
+4: 1 time(s), 14%
+33: 1 time(s), 14%
+42: 1 time(s), 14%
+1: 3 time(s), 43%</code></pre>
+
+<p><strong>Example 3:</strong></p>
+
+<pre><code class="language-no-highlight">$&gt; java SortingTool -sortingType
+No sorting type defined!</code></pre>
+
+<p><strong>Example 4:</strong></p>
+
+<pre><code class="language-no-highlight">$&gt; java SortingTool -dataType
+No data type defined!</code></pre>
+
+<p><strong>Example 5:</strong></p>
+
+<pre><code class="language-no-highlight">$&gt; java SortingTool -dataType long -sortingType natural -abc -def
+"-abc" isn't a valid parameter. It's skipped.
+"-def" isn't a valid parameter. It's skipped.
+&gt; a 2 -42
+"a" isn't a long. It's skipped.
+Total numbers: 2.
+Sorted data: -42 2</code></pre>

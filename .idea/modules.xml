@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Sorting_Tool.iml" filepath="$PROJECT_DIR$/.idea/modules/Sorting_Tool.iml" group="Sorting_Tool" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Sorting Tool/task/Sorting_Tool-task.iml" filepath="$PROJECT_DIR$/.idea/modules/Sorting Tool/task/Sorting_Tool-task.iml" group="Sorting_Tool/Sorting_Tool-task" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Sorting Tool/task/Sorting_Tool-task_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Sorting Tool/task/Sorting_Tool-task_main.iml" group="Sorting_Tool/Sorting_Tool-task" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Sorting Tool/task/Sorting_Tool-task_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Sorting Tool/task/Sorting_Tool-task_test.iml" group="Sorting_Tool/Sorting_Tool-task" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/util/util.iml" filepath="$PROJECT_DIR$/.idea/modules/util/util.iml" group="Sorting_Tool/util" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/util/util_main.iml" filepath="$PROJECT_DIR$/.idea/modules/util/util_main.iml" group="Sorting_Tool/util" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/util/util_test.iml" filepath="$PROJECT_DIR$/.idea/modules/util/util_test.iml" group="Sorting_Tool/util" />
+    </modules>
+  </component>
+</project>

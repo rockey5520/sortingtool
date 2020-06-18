@@ -1,0 +1,70 @@
+<h2 style="text-align: center;">Description</h2>
+
+<p>In this stage, you should implement sorting by count. The result should be pairs like <code class="java">(count, dataEntry)</code> sorted by count.</p>
+
+<p>Remove parsing of the <code class="java">-sortIntegers</code> argument. Instead of this argument add another - named <code class="java">-sortingType</code>.  This argument can be followed by <code class="java">natural</code> or <code class="java">byCount</code> sorting types. If <code class="java">-sortingType</code> is not presented among argument list then consider <code class="java">natural</code> to be the default sorting type.</p>
+
+<p>If <code class="java">-dataType</code> is <code class="java">word</code> or <code class="java">line</code>, use <code class="java">String.compareTo(String)</code> method to compare strings in sorting.</p>
+
+<p>To sum up, your program should support two sorting methods now and work with all types of data.</p>
+
+<h2 style="text-align: center;">How-to</h2>
+
+<p>You can use the following algorithm:</p>
+
+<ol>
+	<li>Sort data entries into <code class="java">List&lt;DataType&gt; sortedDataEntries</code>.</li>
+	<li>Iterate over it and create <code class="java">Map&lt;DataType, Integer&gt; dataEntryToCount</code>.</li>
+	<li>Iterate over it and create <code class="java">List&lt;Integer&gt; counts</code>.</li>
+	<li>Sort it into <code class="java">List&lt;Integer&gt; sortedCounts</code> and remove duplicates in it.</li>
+	<li>Iterate over <code class="java">dataEntryToCount</code> and create <code class="java">Map&lt;Integer, Set&lt;DataEntry&gt;&gt; countToDataEntries</code>.</li>
+	<li>Now iterate over <code class="java">sortedCounts</code> and print all data entries from <code class="java">countToDataEntries.get(count)</code>.</li>
+</ol>
+
+<p>Or you can use <a target="_blank" href="https://docs.oracle.com/javase/8/docs/api/java/util/Collections.html#sort-java.util.List-java.util.Comparator-" rel="nofollow noopener noreferrer">sorting with comparator</a> to skip the last four actions.</p>
+
+<h2 style="text-align: center;">Examples</h2>
+
+<p><strong>Run configuration examples:</strong></p>
+
+<pre><code class="language-no-highlight">java SortingTool -sortingType natural -dataType long
+</code></pre>
+
+<pre><code class="language-no-highlight">java SortingTool -dataType word -sortingType byCount
+</code></pre>
+
+<p><strong>Run examples:</strong></p>
+
+<p>Input:</p>
+
+<pre><code class="java">1 -2   33 4
+42
+1                 1
+</code></pre>
+
+<p>Output for sorting longs by count:</p>
+
+<pre><code class="java">Total numbers: 7.
+-2: 1 time(s), 14%
+4: 1 time(s), 14%
+33: 1 time(s), 14%
+42: 1 time(s), 14%
+1: 3 time(s), 43%</code></pre>
+
+<p>Output for sorting numbers naturally: </p>
+
+<pre><code class="language-no-highlight">Total numbers: 7
+Sorted data: -2 1 1 1 4 42 33 </code></pre>
+
+<p>Output for sorting words naturally:</p>
+
+<pre><code class="language-no-highlight">Total words: 7
+Sorted data: -2 1 1 1 33 4 42 </code></pre>
+
+<p>Output for sorting lines naturally:</p>
+
+<pre><code class="language-no-highlight">Total lines: 3
+Sorted data:
+1                 1
+1 -2   33 4
+42</code></pre>
