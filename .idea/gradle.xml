@@ -13,7 +13,9 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Problems/Count the number of merge operations" />
             <option value="$PROJECT_DIR$/Problems/Merge all sequences" />
+            <option value="$PROJECT_DIR$/Problems/Out of bounds!" />
             <option value="$PROJECT_DIR$/Problems/The number of inversions" />
+            <option value="$PROJECT_DIR$/Problems/Throw a checked exception" />
             <option value="$PROJECT_DIR$/Problems/Throw an IOException" />
             <option value="$PROJECT_DIR$/Problems/Throw an unchecked exception" />
             <option value="$PROJECT_DIR$/Sorting Tool/task" />

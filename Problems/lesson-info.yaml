@@ -4,3 +4,5 @@ content:
 - The number of inversions
 - Throw an IOException
 - Throw an unchecked exception
+- Throw a checked exception
+- Out of bounds!
