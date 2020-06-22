@@ -2,3 +2,5 @@ content:
 - Count the number of merge operations
 - Merge all sequences
 - The number of inversions
+- Throw an IOException
+- Throw an unchecked exception

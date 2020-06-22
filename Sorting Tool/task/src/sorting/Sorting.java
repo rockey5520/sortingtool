@@ -16,13 +16,7 @@ public class Sorting {
 
   private final List<String> stringList;
   private final Map<String, Integer> maxCount;
-  private SortingOrder sortingOrder;
-  private InputType inputType;
-
   private Type type;
-  private String inputName;
-  private OutputType outputType;
-  private String outputName;
 
   public Sorting() {
     this.type = Type.WORD;
@@ -31,6 +25,28 @@ public class Sorting {
     this.outputType = OutputType.SCANNER;
     this.stringList = new ArrayList<>();
     this.maxCount = new TreeMap<>();
+  }
+
+  public enum Type {
+    LINE,
+    WORD,
+    LONG
+  }
+
+  private SortingOrder sortingOrder;
+  private InputType inputType;
+  private String inputName;
+  private OutputType outputType;
+  private String outputName;
+
+  public enum SortingOrder {
+    NATURAL,
+    BYCOUNT
+  }
+
+  public enum InputType {
+    SCANNER,
+    INPUTFILE
   }
 
   public void setType(String type) {
@@ -63,6 +79,11 @@ public class Sorting {
 
   public void setOutputName(String outputName) {
     this.outputName = outputName;
+  }
+
+  public enum OutputType {
+    SCANNER,
+    OUTPUTFILE
   }
 
   public void execute() {
@@ -182,26 +203,5 @@ public class Sorting {
         }
         break;
     }
-  }
-
-  public enum Type {
-    LINE,
-    WORD,
-    LONG
-  }
-
-  public enum SortingOrder {
-    NATURAL,
-    BYCOUNT
-  }
-
-  public enum InputType {
-    SCANNER,
-    INPUTFILE
-  }
-
-  public enum OutputType {
-    SCANNER,
-    OUTPUTFILE
   }
 }
